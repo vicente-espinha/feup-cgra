@@ -22,7 +22,7 @@ serialInclude([
 	'MySubmarine.js',
 	'MyTrapezius.js',
 	'MyCylinderWithTop.js',
-	
+	'MyPyramide.js',
 
 	main=function() {
 		var app = new CGFapplication(document.body);

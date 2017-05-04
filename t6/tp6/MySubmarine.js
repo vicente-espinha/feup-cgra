@@ -15,6 +15,7 @@
     this.top = new MyCylinderWithTop(this.scene,500);
     this.fins = new MyTrapezius(this.scene);
     this.quad = new MyUnitCubeQuad(this.scene);
+    this.test = new MyPyramide(this.scene);
  	this.initBuffers();
 
  };
@@ -66,69 +67,67 @@
      this.top.display();
      this.scene.popMatrix();
 
-     //quad fin
-     this.scene.pushMatrix();
-     this.scene.translate(0,0,4);
-     this.fins.display();
-     this.scene.popMatrix();
-     this.scene.pushMatrix();
-     this.scene.translate(0,0,4);
-     this.scene.rotate(-90* degToRad, 0,0,1);
-     this.fins.display();
-     this.scene.popMatrix();
-     this.scene.pushMatrix();
-     this.scene.scale(0.6,1,1);
-     this.scene.translate(0,1.3,2.5);
-     this.scene.rotate(-90 * degToRad, 1,0,0);
-     this.fins.display();
-     this.scene.popMatrix();
-
+ 
      //helices
      this.scene.pushMatrix();
 
      this.scene.translate(-2,0,0);
      this.scene.scale(0.25,0.25,0.25);
-     this.scene.translate(4.8,-3,16);
+     this.scene.translate(4.8,-3,0);
      this.mainBody.display();
      this.scene.popMatrix();
      this.scene.pushMatrix();
 
      this.scene.translate(-2,0,0);
      this.scene.scale(0.25,0.25,0.25);
-     this.scene.translate(11,-3,16);
+     this.scene.translate(11,-3,0);
      this.mainBody.display();
      this.scene.popMatrix();
 
 
      this.scene.pushMatrix();
-     this.scene.translate(-0.8,-0.75,4);
+     this.scene.translate(-0.8,-0.75,0);
      this.scene.scale(0.45,0.15,0.05);
      this.quad.display();
      this.scene.popMatrix();
 
       this.scene.pushMatrix();
-     this.scene.translate(0.8,-0.75,4);
+     this.scene.translate(0.8,-0.75,0);
      this.scene.scale(0.45,0.15,0.05);
      this.quad.display();
      this.scene.popMatrix();
 
 
       this.scene.pushMatrix();
-      this.scene.translate(0.8,-0.75,4);
+      this.scene.translate(0.8,-0.75,0);
       this.scene.scale(0.1,0.1,0.05);
       this.frontAndBack.display();
       this.scene.popMatrix();
       this.scene.pushMatrix();
-      this.scene.translate(-0.8,-0.75,4);
+      this.scene.translate(-0.8,-0.75,0);
       this.scene.scale(0.1,0.1,0.05);
-      this.frontAndBack.display();
+       this.frontAndBack.display();
       this.scene.popMatrix();
+    
+    //fins
+    this.scene.pushMatrix();
+    this.scene.rotate(-90*degToRad,1,0,0);
+    this.fins.display();
+    this.scene.popMatrix();
+    this.scene.pushMatrix();
+    this.scene.rotate(90* degToRad,0,0,1);
+    this.scene.rotate(90* degToRad,1,0,0);
+    this.fins.display();
+    this.scene.popMatrix();
+    this.scene.pushMatrix();
+    this.scene.rotate(-90*degToRad,1,0,0);
+    this.scene.scale(0.6,1,1);
+    this.scene.translate(0,-2.1,1.2);
+    this.fins.display();
+    this.scene.popMatrix();
+    
 
-
-
-
-
-
+   
 
  };
 
