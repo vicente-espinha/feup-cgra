@@ -48,7 +48,7 @@ LightingScene.prototype.init = function(application) {
     this.undersea = new Plane(this,60,0,0,10,12);
     this.poste = new MyCylinder(this,20,20);
     this.clock = new MyClock(this,12,1);
-    this.test = new MyPrism(this,3,1);
+    this.test = new MyPyramide(this);
 
     //this.boardA = new Plane(this,BOARD_A_DIVISIONS);
     //this.boardB = new Plane(this,BOARD_B_DIVISIONS);
@@ -428,10 +428,10 @@ LightingScene.prototype.display = function() {
     this.popMatrix();
 
     //test
-    //this.pushMatrix();
-    //this.rotate(90* degToRad,1,0,0);
-    //this.test.display();
-   // this.popMatrix();
+    this.pushMatrix();
+    
+    this.test.display();
+    this.popMatrix();
 
     // ---- END Primitive drawing section
 }

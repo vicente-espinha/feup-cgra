@@ -87,13 +87,13 @@
 
      this.scene.pushMatrix();
      this.scene.translate(-0.8,-0.75,0);
-     this.scene.scale(0.45,0.15,0.05);
+     this.scene.scale(0.25,0.05,0.01);
      this.quad.display();
      this.scene.popMatrix();
 
       this.scene.pushMatrix();
      this.scene.translate(0.8,-0.75,0);
-     this.scene.scale(0.45,0.15,0.05);
+     this.scene.scale(0.25,0.05,0.01);
      this.quad.display();
      this.scene.popMatrix();
 
