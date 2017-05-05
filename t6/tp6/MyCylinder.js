@@ -52,6 +52,17 @@
             }
         }
     }
+    for (j = 0; j < this.stacks; j++) {
+        for (i = 0; i < this.slices; i++) {
+            if (i == this.slices - 1) {
+                this.indices.push(0 + i + this.slices * (j + 1), 0 + this.slices * (j + 1),0 + this.slices * j );
+                this.indices.push( 0 + i + this.slices * j, 0 + i + this.slices * (j + 1), 0 + this.slices * j);
+            } else {
+                this.indices.push(0 + i + this.slices * (j + 1), 1 + i + this.slices * j, 0 + i + this.slices * j);
+                this.indices.push(0 + i + this.slices * (j + 1), 1 + i + this.slices * (j + 1),1 + i + this.slices * j );
+            }
+        }
+    }
 
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();

@@ -41,7 +41,7 @@
 
      //back
      this.scene.pushMatrix();
-     this.scene.translate(0,0,4);
+     this.scene.translate(0,0,3.9);
      this.scene.scale(0.7,1,1);
      this.frontAndBack.display();
      this.scene.popMatrix();
@@ -86,14 +86,14 @@
 
 
      this.scene.pushMatrix();
-     this.scene.translate(-0.8,-0.75,0);
-     this.scene.scale(0.25,0.05,0.01);
+     this.scene.translate(-0.8,-0.75,0.1);
+     this.scene.scale(0.23,0.05,0.01);
      this.quad.display();
      this.scene.popMatrix();
 
       this.scene.pushMatrix();
-     this.scene.translate(0.8,-0.75,0);
-     this.scene.scale(0.25,0.05,0.01);
+     this.scene.translate(0.75,-0.75,0.1);
+     this.scene.scale(0.23,0.05,0.01);
      this.quad.display();
      this.scene.popMatrix();
 
@@ -109,16 +109,19 @@
        this.frontAndBack.display();
       this.scene.popMatrix();
     
-    //fins
+    //side fins
     this.scene.pushMatrix();
-    this.scene.rotate(-90*degToRad,1,0,0);
+    this.scene.rotate(90*degToRad,1,0,0);
     this.fins.display();
     this.scene.popMatrix();
+    //vertical fin
     this.scene.pushMatrix();
+    this.scene.scale(1,1.1,1);
     this.scene.rotate(90* degToRad,0,0,1);
     this.scene.rotate(90* degToRad,1,0,0);
     this.fins.display();
     this.scene.popMatrix();
+    //top fin
     this.scene.pushMatrix();
     this.scene.rotate(-90*degToRad,1,0,0);
     this.scene.scale(0.6,1,1);

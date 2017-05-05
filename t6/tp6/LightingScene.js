@@ -142,7 +142,21 @@ LightingScene.prototype.init = function(application) {
     this.underseaAppearance.setSpecular(0.2, 0.2, 0.2, 1);
     this.underseaAppearance.setShininess(1000);
 
+    this.eder = new CGFappearance(this);
+    this.eder.loadTexture("../images/flagt.png");
+    this.eder.setAmbient(0.6, 0.6, 0.6, 1);
+    this.eder.setDiffuse(0.6, 0.6, 0.6, 0.2);
+    this.eder.setSpecular(0.2, 0.2, 0.2, 0.5);
+    this.eder.setShininess(500);
+
+  /*  this.submarineAppearances =[
+     eder
+    ];*/
+
     this.setUpdatePeriod(1000 / 60);
+
+
+
 }
 ;
 
@@ -398,7 +412,8 @@ LightingScene.prototype.display = function() {
     //submarine
     this.pushMatrix();
     this.translate(this.submarine.x, this.submarine.y, this.submarine.z);
-    this.rotate(this.submarine.rotY * degToRad, 0, 1, 0);    
+    this.rotate(this.submarine.rotY * degToRad, 0, 1, 0);
+    this.eder.apply();    
     this.submarine.display();
     this.popMatrix();
 
@@ -427,12 +442,7 @@ LightingScene.prototype.display = function() {
     this.clock.display();
     this.popMatrix();
 
-    //test
-    this.pushMatrix();
-    
-    this.test.display();
-    this.popMatrix();
-
+   
     // ---- END Primitive drawing section
 }
 ;
