@@ -22,17 +22,11 @@ LightingScene.prototype.init = function(application) {
     this.Clock = false;
     this.speed = 3;
     this.Appearances = null;
-    this.Euro2016=true;
-    this.Rusticsub=false;
-    this.Nature=false;
-    this.Shining=false;
+   
 
-    this.appearanceList=[
-    this.euro2016=0,
-    this.rusticsub=1,
-    this.nature=2,
-    this.shining=3
-];
+   
+
+
 
     this.initCameras();
 
@@ -181,17 +175,22 @@ LightingScene.prototype.init = function(application) {
     this.fluorescent.setDiffuse(0.6, 0.6, 0.6, 0.2);
     this.fluorescent.setSpecular(0.2, 0.2, 0.2, 0.5);
     this.fluorescent.setShininess(500);
-
     
    this.submarineAppearances =[
      this.eder,
-     this.subtex,
+     this.rustic,
      this.grass,
      this.fluorescent
     ];
-
-
-
+    this.appearanceList={
+        'Euro2016' :0,
+        'Rusticsub' : 1,
+        'Nature' : 2,
+        'Shining':3
+    }
+    this.Appearances = 'Nature';
+    console.log(this.Appearances);
+   this.currAppearance = this.appearanceList[this.Appearances];
     this.setUpdatePeriod(1000 / 60);
 
 
@@ -210,11 +209,13 @@ LightingScene.prototype.update = function(currTime) {
     this.lastime = this.lastime || 0.0;
     this.deltatime = currTime - this.lastTime || 0.0;
     this.lastTime = currTime;
+    console.log(this.Appearances);
     if(!this.Clock){
     this.clock.update(this.deltatime);
     }
+   this.currAppearance = this.appearanceList[this.Appearances];
     //this.plane.update(this.deltatime);
-
+  
     if (this.Light1)
 		this.lights[0].enable();
 	if (this.Light2)
@@ -232,7 +233,11 @@ LightingScene.prototype.update = function(currTime) {
 		this.lights[2].disable();
 	if (!this.Light4)
 		this.lights[3].disable();
+  
+
+
 }
+ 
 ;
 
 LightingScene.prototype.initLights = function() {
@@ -454,19 +459,7 @@ LightingScene.prototype.display = function() {
     this.pushMatrix();
     this.translate(this.submarine.x, this.submarine.y, this.submarine.z);
     this.rotate(this.submarine.rotY * degToRad, 0, 1, 0);
-    if(this.Euro2016){
-    	this.submarineAppearances[this.appearanceList[0]].apply();
-    }
-    if(this.Rusticsub){
-    	this.submarineAppearances[this.appearanceList[1]].apply();
-    }
-    if(this.Nature){
-    	this.submarineAppearances[this.appearanceList[2]].apply();
-    }
-    if(this.Shining){
-    	this.submarineAppearances[this.appearanceList[3]].apply();
-    }
-        
+    this.submarineAppearances[this.currAppearance].apply(); 
     this.submarine.display();
     this.popMatrix();
 
