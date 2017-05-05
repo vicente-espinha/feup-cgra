@@ -31,7 +31,13 @@ MyInterface.prototype.init = function(application) {
     this.gui.add(this.scene, 'doSomething');
 
     this.gui.add(this.scene,'Clock');
+    
+    //adds appearance options
 
+    var listener = this.gui.add(this.scene, 'Appearances', [ 'Euro2016', 'Rusticsub', 'Nature','Shining' ] );
+    listener.onChange(function(){
+        console.log("working");
+    })
     // add a group of controls (and open/expand by defult)
 
     var group = this.gui.addFolder("Lights");
@@ -44,6 +50,7 @@ MyInterface.prototype.init = function(application) {
     group.add(this.scene, 'Light2');
     group.add(this.scene, 'Light3');
     group.add(this.scene, 'Light4');
+    
 
     // add a slider
     // must be a numeric variable of the scene, initialized in scene.init e.g.

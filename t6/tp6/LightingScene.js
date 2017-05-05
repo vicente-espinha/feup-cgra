@@ -21,6 +21,18 @@ LightingScene.prototype.init = function(application) {
     this.Light4 = false;
     this.Clock = false;
     this.speed = 3;
+    this.Appearances = null;
+    this.Euro2016=true;
+    this.Rusticsub=false;
+    this.Nature=false;
+    this.Shining=false;
+
+    this.appearanceList=[
+    this.euro2016=0,
+    this.rusticsub=1,
+    this.nature=2,
+    this.shining=3
+];
 
     this.initCameras();
 
@@ -149,11 +161,40 @@ LightingScene.prototype.init = function(application) {
     this.eder.setSpecular(0.2, 0.2, 0.2, 0.5);
     this.eder.setShininess(500);
 
-  /*  this.submarineAppearances =[
-     eder
-    ];*/
+    this.rustic = new CGFappearance(this);
+    this.rustic.loadTexture("../images/subtex.png");
+    this.rustic.setAmbient(0.6, 0.6, 0.6, 1);
+    this.rustic.setDiffuse(0.6, 0.6, 0.6, 0.2);
+    this.rustic.setSpecular(0.2, 0.2, 0.2, 0.5);
+    this.rustic.setShininess(500);
+
+    this.grass = new CGFappearance(this);
+    this.grass.loadTexture("../images/grass.png");
+    this.grass.setAmbient(0.6, 0.6, 0.6, 1);
+    this.grass.setDiffuse(0.6, 0.6, 0.6, 0.2);
+    this.grass.setSpecular(0.2, 0.2, 0.2, 0.5);
+    this.grass.setShininess(500);
+
+    this.fluorescent = new CGFappearance(this);
+    this.fluorescent.loadTexture("../images/yellowsub.png");
+    this.fluorescent.setAmbient(0.6, 0.6, 0.6, 1);
+    this.fluorescent.setDiffuse(0.6, 0.6, 0.6, 0.2);
+    this.fluorescent.setSpecular(0.2, 0.2, 0.2, 0.5);
+    this.fluorescent.setShininess(500);
+
+    
+   this.submarineAppearances =[
+     this.eder,
+     this.subtex,
+     this.grass,
+     this.fluorescent
+    ];
+
+
 
     this.setUpdatePeriod(1000 / 60);
+
+
 
 
 
@@ -413,7 +454,19 @@ LightingScene.prototype.display = function() {
     this.pushMatrix();
     this.translate(this.submarine.x, this.submarine.y, this.submarine.z);
     this.rotate(this.submarine.rotY * degToRad, 0, 1, 0);
-    this.eder.apply();    
+    if(this.Euro2016){
+    	this.submarineAppearances[this.appearanceList[0]].apply();
+    }
+    if(this.Rusticsub){
+    	this.submarineAppearances[this.appearanceList[1]].apply();
+    }
+    if(this.Nature){
+    	this.submarineAppearances[this.appearanceList[2]].apply();
+    }
+    if(this.Shining){
+    	this.submarineAppearances[this.appearanceList[3]].apply();
+    }
+        
     this.submarine.display();
     this.popMatrix();
 

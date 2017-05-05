@@ -19,17 +19,24 @@
     this.vertices = [];
     this.indices = [];
     this.normals = [];
+    this.texCoords = [];
+
     var ang = Math.PI * 2 / this.slices;
+    
     
     for (j = 0; j < this.stacks + 1; j++) {
     	var x = Math.sqrt(1-(((j+1)/this.stacks)*(j+1)/this.stacks));
         for (i = 0; i < this.slices; i++) {
-            if(j == 0)
+            if(j == 0){
                 this.vertices.push(Math.cos(i * ang), Math.sin(i * ang), 0);
+           //     this.texCoords.push(Math.cos(i * ang),Math.sin(i * ang));
+            }
+
             else
                 this.vertices.push(x*Math.cos(i * ang), x*Math.sin(i * ang), (j+1)/this.stacks);
 
             this.normals.push(Math.cos(i * ang), Math.sin(i * ang), 0);
+            this.texCoords.push(Math.cos(i * ang)/2.0 + 0.5, Math.sin(i * ang)/2.0 + 0.5);
         }
     }
 
