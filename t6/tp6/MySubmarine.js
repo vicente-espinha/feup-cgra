@@ -41,7 +41,7 @@
 
      //back
      this.scene.pushMatrix();
-     this.scene.translate(0,0,3.9);
+     this.scene.translate(0,0,4);
      this.scene.scale(0.7,1,1);
      this.frontAndBack.display();
      this.scene.popMatrix();
