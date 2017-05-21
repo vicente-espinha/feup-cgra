@@ -7,6 +7,8 @@ var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
 
 var FPS = 60;
+var a= 0;
+var m=0;
 
 function LightingScene() {
     CGFscene.call(this);
@@ -21,6 +23,10 @@ LightingScene.prototype.init = function(application) {
     this.Light2 = true;
     this.Light3 = true;
     this.Light4 = true;
+    this.torpedoExists = false;
+    this.torpedoCreated = false;
+    
+   this.delta=0;   
     this.enableClock = true;
     this.Clock = function() {
         if (this.enableClock) {
@@ -63,6 +69,10 @@ LightingScene.prototype.init = function(application) {
     this.undersea = new Plane(this,60,0,0,10,12);
     this.poste = new MyCylinder(this,20,20);
     this.clock = new MyClock(this,12,1);
+    this.target = new MyTarget(this,0,4,0);
+    this.secondTarget  = new MyTarget(this,2,0,0);
+    
+    
 
     //this.boardA = new Plane(this,BOARD_A_DIVISIONS);
     //this.boardB = new Plane(this,BOARD_B_DIVISIONS);
@@ -128,6 +138,13 @@ LightingScene.prototype.init = function(application) {
     this.fluorescent.setSpecular(0.2, 0.2, 0.2, 0.5);
     this.fluorescent.setShininess(500);
     
+    this.explosionList=[];
+    this.torpedoList = [];
+    this.targetList = [
+      this.target,
+      this.secondTarget
+    ];
+  
    this.submarineAppearances =[
      this.eder,
      this.rustic,
@@ -160,9 +177,28 @@ LightingScene.prototype.update = function(currTime) {
     if (this.enableClock) {
         this.clock.update(this.deltatime);
     }
+    
+ 
+ // for(var h=0; h < this.explosionList.length;h++){
+
+      
+   
+  //}
+
 
 //textues of submarine
     this.currAppearance = this.appearanceList[this.Appearances];
+    
+ 
+  console.log(this.torpedoCreated);
+  if(this.torpedoCreated){
+      for(var c = 0; c < this.torpedoList.length; c++){
+           this.torpedoList[c].movement();
+          
+
+      }
+  }
+
     
 
     //move up
@@ -173,7 +209,7 @@ LightingScene.prototype.update = function(currTime) {
         this.submarine.rotX = this.submarine.rotX + 0.5;
     }
 
-
+     
   //move down
     if(this.up == -1 && this.submarine.speed > 0){
         this.submarine.rotateDown();
@@ -182,6 +218,7 @@ LightingScene.prototype.update = function(currTime) {
         this.submarine.rotX = this.submarine.rotX - 0.5;
     }
 
+    
  //helices movement
 
 this.submarine.rotateHelices();
@@ -334,7 +371,79 @@ LightingScene.prototype.display = function() {
     this.submarineAppearances[this.currAppearance].apply();
     this.submarine.display();
     this.popMatrix();
+    
+    //torpedo
+      this.delta = this.currTime - this.delta;
 
+     if(this.torpedoExists == true && a < this.targetList.length ){
+        this.torpedo = new MyTorpedo(this, this.submarine.x ,this.submarine.y-2,this.submarine.z- this.submarine.z/6, this.targetList[a]);
+        this.torpedo.distance();
+        this.torpedoList.push(this.torpedo);
+        a++;
+        this.torpedoCreated = true;
+       
+     }
+       if(this.torpedoCreated){
+         for(var b =0; b < this.torpedoList.length; b++){
+        this.pushMatrix();
+        this.translate(this.torpedoList[b].x, this.torpedoList[b].y, this.torpedoList[b].z);
+        this.rotate(this.torpedoList[b].rotY * degToRad, 0, 1, 0);
+        this.rotate(this.torpedoList[b].rotX * degToRad, 1, 0, 0);
+         if(Math.round(this.torpedoList[b].x) == this.torpedoList[b].target.coordX && Math.round(this.torpedoList[b].y)==this.torpedoList[b].target.coordY && Math.round(this.torpedoList[b].z) == this.torpedoList[b].target.coordZ && this.torpedoList[b].isCollided == false){
+               this.explosion = new MyExplosion(this,0,0,0);
+               this.torpedoList[b].target.collision = true;
+               this.torpedoList[b].isCollided=true;
+               this.explosionList.push(this.explosion);
+
+
+           }   for(var l =0; l < this.explosionList.length; l++){
+               console.log(this.explosionList.length);
+               if(this.torpedoList[b].isCollided){
+               this.pushMatrix();
+               this.translate(this.explosionList[l].x, this.explosionList[l].y,this.explosionList[l].z);
+               this.explosionList[l].existence();
+               
+               this.fluorescent.apply();
+                this.explosionList[l].b++;
+                this.explosionList[l].update();
+          this.explosionList[l].explodirComTempo++;
+                if(this.explosionList[l].aumentar == false){
+               this.explosionList[l].display();
+
+                }else{
+                    this.explosionList.shift();
+                ;
+                    this.torpedoList.shift();
+                }
+              
+               this.popMatrix();       
+           }
+           } 
+              console.log(this.explosionList.length);
+           this.submarineAppearances[this.currAppearance].apply();
+          if(this.torpedoList.length>0){ 
+           if(this.torpedoList[b].target.collision == false){
+        this.torpedoList[b].display();
+           }
+          }
+        this.popMatrix();
+        this.torpedoExists =false;
+         }
+    }
+
+            
+        
+   
+    //target
+    for(var i=0; i < this.targetList.length; i++){
+       if(this.targetList[i].collision == false){
+    this.pushMatrix();
+    this.materialA.apply();
+    this.targetList[i].display();
+    this.popMatrix();
+       }
+        
+    }
     //floor
     this.pushMatrix();
     this.translate(8, 0, 8)
@@ -359,7 +468,8 @@ LightingScene.prototype.display = function() {
     this.scale(0.75, 0.75, 0.3);
     this.clock.display();
     this.popMatrix();
-
+    
+    
 
 
     // ---- END Primitive drawing section

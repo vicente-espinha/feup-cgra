@@ -109,6 +109,11 @@ MyInterface.prototype.processKeyboard = function(event) {
         this.scene.submarine.PeriscopeMovement(0);
         console.log("key 'L' pressed");
     }
+    else if(event.keyCode ==  70 || event.keyCode == 102){
+        this.scene.torpedoExists = true;
+       
+        console.log("Key 'F' pressed");
+    }
 
 };
 
